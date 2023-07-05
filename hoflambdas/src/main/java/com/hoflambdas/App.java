@@ -99,8 +99,19 @@ public final class App {
             }
             return false;
         };
-        boolean result = runSome(some, new int[] { 1, 2, 3, 4, 5}, (i) -> i == 6);
-        printThing(lambdaPrintable, "Some:", Boolean.toString(result), "~");
+        boolean someResult = runSome(some, new int[] { 1, 2, 3, 4, 5}, (i) -> i == 6);
+        printThing(lambdaPrintable, "Some:", Boolean.toString(someResult), "~");
+
+        Everyable every = (inputArr, callback) -> {
+            for (int i = 0; i < inputArr.length; i++) {
+                if (!callback.boolable(inputArr[i])) {
+                    return false;
+                }
+            }
+            return true;
+        };
+        boolean everyResult = runEvery(every, new int[]{ 1, 1, 1, 1, 1 }, (x) -> x == 1);
+        printThing(lambdaPrintable, "Every:", Boolean.toString(everyResult), "~");
 
     }
 
@@ -136,6 +147,11 @@ public final class App {
 
     static boolean runSome(Someable thing, int[] inputArr, Boolable callback) {
         boolean result = thing.some(inputArr, callback);
+        return result;
+    }
+
+    static boolean runEvery(Everyable thing, int[] inputArr, Boolable callback) {
+        boolean result = thing.every(inputArr, callback);
         return result;
     }
 }
