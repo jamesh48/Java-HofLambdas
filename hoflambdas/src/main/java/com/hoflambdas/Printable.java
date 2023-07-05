@@ -1,5 +1,5 @@
 package com.hoflambdas;
 
 public interface Printable {
-    void print(String prefix, String suffix);
+    void print(String prefix, String result, String suffix);
 }

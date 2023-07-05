@@ -6,12 +6,35 @@ public final class App {
 
     public static void main(String[] args) {
 
-        Printable lambdaPrintable = (p, s) -> {
-            String meowMsg = p + "Meow" + s;
-            System.out.println(meowMsg);
+        /* Print */
+        Printable lambdaPrintable = (p, r, s) -> {
+            String resultMsg = p + r + s;
+            System.out.println(resultMsg);
         };
-        printThing(lambdaPrintable);
+        printThing(lambdaPrintable, "Result: ", "Print Test", " ~");
 
+        /* Slice */
+        Sliceable sliceArray = (inputArr, startIndex, endIndex) -> {
+            int[] slicedArray = new int[endIndex - startIndex];
+            for (int i = 0; i < slicedArray.length; i++) {
+                slicedArray[i] = inputArr[startIndex + i];
+            }
+            return slicedArray;
+        };
+
+        int[] sliceResult = runSlice(sliceArray, new int[]{ 1, 2, 3, 4, 5 }, 1, 3);
+        printThing(lambdaPrintable, "Slice: ", Arrays.toString(sliceResult), " ~");
+
+        /* First */
+        Firstable first = (inputArr, n) -> {
+            int[] resultArr = runSlice(sliceArray, inputArr, 0, n);
+            return resultArr;
+        };
+
+        int[] firstResult = runFirst(first, new int[]{ 1, 2, 3, 4, 5 }, 1);
+        printThing(lambdaPrintable, "First: ", Arrays.toString(firstResult), " ~");
+
+        /* Map */
         Mapable lambdaMap = (inputArr, callback) -> {
             for (int i = 0; i < inputArr.length; i++) {
                 inputArr[i] = callback.intable(inputArr[i]);
@@ -19,8 +42,11 @@ public final class App {
             return inputArr;
         };
 
-        runMap(lambdaMap);
+        int[] mapResult = runMap(lambdaMap);
+        printThing(lambdaPrintable, "Map: ", Arrays.toString(mapResult), " ~");
 
+
+        /* Filter */
         Filterable lambdaFilter = (inputArr, callback) -> {
             int count = 0;
             for (int i = 0; i < inputArr.length; i++) {
@@ -45,24 +71,33 @@ public final class App {
 
     }
 
-    static void printThing(Printable thing) {
-        thing.print("Result: ", " ~");
+
+    static void printThing(Printable thing, String prefix, String result, String suffix) {
+        thing.print(prefix, result, suffix);
     }
 
-    static void runMap(Mapable thing) {
+    static int[] runSlice(Sliceable thing, int[] inputArr, int startIndex, int endIndex) {
+        int[] resultArr = thing.slice(inputArr, startIndex, endIndex);
+        return resultArr;
+    }
+
+    static int[] runFirst(Firstable thing, int[] inputArr, int n) {
+        int[] resultArr = thing.first(inputArr, n);
+        return resultArr;
+    }
+
+    static int[] runMap(Mapable thing) {
         int[] inputArr = new int[] { 1, 2, 3 };
         Intable callback = (int i) -> i * 10;
-        int[] outputArr = thing.mapArray(inputArr, callback);
-        // Validation
-        System.out.println(Arrays.toString(outputArr));
+        int[] resultArr = thing.mapArray(inputArr, callback);
+        return resultArr;
     }
 
-    static void runFilter(Filterable thing) {
+    static int[] runFilter(Filterable thing) {
         int[] inputArr = new int[]{ 1, 2, 3, 4, 5 };
         Boolable callback = (int i) -> i == 3;
         int[] resultArr = thing.filterArray(inputArr, callback);
-
-        // Validation
-        System.out.println(Arrays.toString(resultArr));
+        return resultArr;
     }
 }
+
