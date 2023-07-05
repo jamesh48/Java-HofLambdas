@@ -90,6 +90,18 @@ public final class App {
         int[] filterResult = runFilter(lambdaFilter, new int[] { 1, 2, 3, 4, 5 }, (i) -> i == 3);
         printThing(lambdaPrintable, "Filter:", Arrays.toString(filterResult), "~");
 
+        /* Some */
+        Someable some = (inputArr, callback) -> {
+            for (int i = 0; i < inputArr.length; i++) {
+                if (callback.boolable(inputArr[i])) {
+                    return true;
+                }
+            }
+            return false;
+        };
+        boolean result = runSome(some, new int[] { 1, 2, 3, 4, 5}, (i) -> i == 6);
+        printThing(lambdaPrintable, "Some:", Boolean.toString(result), "~");
+
     }
 
 
@@ -120,6 +132,11 @@ public final class App {
     static int[] runFilter(Filterable thing, int[] inputArr, Boolable callback) {
         int[] resultArr = thing.filterArray(inputArr, callback);
         return resultArr;
+    }
+
+    static boolean runSome(Someable thing, int[] inputArr, Boolable callback) {
+        boolean result = thing.some(inputArr, callback);
+        return result;
     }
 }
 
