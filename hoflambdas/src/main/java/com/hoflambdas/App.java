@@ -2,6 +2,8 @@ package com.hoflambdas;
 
 import java.util.Arrays;
 
+import com.hoflambdas.Interfaces.Lastable;
+
 public final class App {
 
     public static void main(String[] args) {
@@ -27,12 +29,31 @@ public final class App {
 
         /* First */
         Firstable first = (inputArr, n) -> {
+            /* undefined n case still needed */
             int[] resultArr = runSlice(sliceArray, inputArr, 0, n);
             return resultArr;
         };
 
         int[] firstResult = runFirst(first, new int[]{ 1, 2, 3, 4, 5 }, 1);
         printThing(lambdaPrintable, "First: ", Arrays.toString(firstResult), " ~");
+
+        /* Last */
+
+        Lastable last = (inputArr, n) -> {
+            if (n == 0) {
+                return new int[]{};
+            }
+            if (n > inputArr.length) {
+                return inputArr;
+            }
+
+            // undefined n case still needed...
+            int[] resultArr = runSlice(sliceArray, inputArr, n - 1, inputArr.length);
+            return resultArr;
+        };
+
+        int[] lastResult = runLast(last, new int[]{ 1, 2, 3, 4, 5}, 3);
+        printThing(lambdaPrintable, "Last: ", Arrays.toString(lastResult), " ~");
 
         /* Map */
         Mapable lambdaMap = (inputArr, callback) -> {
@@ -83,6 +104,11 @@ public final class App {
 
     static int[] runFirst(Firstable thing, int[] inputArr, int n) {
         int[] resultArr = thing.first(inputArr, n);
+        return resultArr;
+    }
+
+    static int[] runLast(Lastable thing, int[] inputArr, int n) {
+        int[] resultArr = thing.last(inputArr, n);
         return resultArr;
     }
 
