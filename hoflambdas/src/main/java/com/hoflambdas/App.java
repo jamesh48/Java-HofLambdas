@@ -2,7 +2,7 @@ package com.hoflambdas;
 
 import java.util.Arrays;
 
-import com.hoflambdas.Interfaces.Lastable;
+import com.hoflambdas.Interfaces.*;
 
 public final class App {
 
@@ -10,10 +10,10 @@ public final class App {
 
         /* Print */
         Printable lambdaPrintable = (p, r, s) -> {
-            String resultMsg = p + r + s;
+            String resultMsg = p + " " + r + " " + s;
             System.out.println(resultMsg);
         };
-        printThing(lambdaPrintable, "Result: ", "Print Test", " ~");
+        printThing(lambdaPrintable, "Print:", "Test", "~");
 
         /* Slice */
         Sliceable sliceArray = (inputArr, startIndex, endIndex) -> {
@@ -25,7 +25,7 @@ public final class App {
         };
 
         int[] sliceResult = runSlice(sliceArray, new int[]{ 1, 2, 3, 4, 5 }, 1, 3);
-        printThing(lambdaPrintable, "Slice: ", Arrays.toString(sliceResult), " ~");
+        printThing(lambdaPrintable, "Slice:", Arrays.toString(sliceResult), "~");
 
         /* First */
         Firstable first = (inputArr, n) -> {
@@ -35,7 +35,7 @@ public final class App {
         };
 
         int[] firstResult = runFirst(first, new int[]{ 1, 2, 3, 4, 5 }, 1);
-        printThing(lambdaPrintable, "First: ", Arrays.toString(firstResult), " ~");
+        printThing(lambdaPrintable, "First:", Arrays.toString(firstResult), "~");
 
         /* Last */
 
@@ -53,7 +53,7 @@ public final class App {
         };
 
         int[] lastResult = runLast(last, new int[]{ 1, 2, 3, 4, 5}, 3);
-        printThing(lambdaPrintable, "Last: ", Arrays.toString(lastResult), " ~");
+        printThing(lambdaPrintable, "Last:", Arrays.toString(lastResult), "~");
 
         /* Map */
         Mapable lambdaMap = (inputArr, callback) -> {
@@ -64,7 +64,7 @@ public final class App {
         };
 
         int[] mapResult = runMap(lambdaMap);
-        printThing(lambdaPrintable, "Map: ", Arrays.toString(mapResult), " ~");
+        printThing(lambdaPrintable, "Map:", Arrays.toString(mapResult), "~");
 
 
         /* Filter */
