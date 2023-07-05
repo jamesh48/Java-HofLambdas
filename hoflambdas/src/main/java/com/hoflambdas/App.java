@@ -38,7 +38,6 @@ public final class App {
         printThing(lambdaPrintable, "First:", Arrays.toString(firstResult), "~");
 
         /* Last */
-
         Lastable last = (inputArr, n) -> {
             if (n == 0) {
                 return new int[]{};
@@ -63,7 +62,7 @@ public final class App {
             return inputArr;
         };
 
-        int[] mapResult = runMap(lambdaMap);
+        int[] mapResult = runMap(lambdaMap,new int[] { 1, 2, 3 }, (i) -> i * 10);
         printThing(lambdaPrintable, "Map:", Arrays.toString(mapResult), "~");
 
 
@@ -88,7 +87,8 @@ public final class App {
             return outputArr;
         };
 
-        runFilter(lambdaFilter);
+        int[] filterResult = runFilter(lambdaFilter, new int[] { 1, 2, 3, 4, 5 }, (i) -> i == 3);
+        printThing(lambdaPrintable, "Filter:", Arrays.toString(filterResult), "~");
 
     }
 
@@ -112,16 +112,12 @@ public final class App {
         return resultArr;
     }
 
-    static int[] runMap(Mapable thing) {
-        int[] inputArr = new int[] { 1, 2, 3 };
-        Intable callback = (int i) -> i * 10;
+    static int[] runMap(Mapable thing, int[] inputArr, Intable callback) {
         int[] resultArr = thing.mapArray(inputArr, callback);
         return resultArr;
     }
 
-    static int[] runFilter(Filterable thing) {
-        int[] inputArr = new int[]{ 1, 2, 3, 4, 5 };
-        Boolable callback = (int i) -> i == 3;
+    static int[] runFilter(Filterable thing, int[] inputArr, Boolable callback) {
         int[] resultArr = thing.filterArray(inputArr, callback);
         return resultArr;
     }
